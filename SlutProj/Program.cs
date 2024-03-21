@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.Design;
-Character Active=new("",0,0,0,0);
+Character Active=new(null,-1,-1,-1,-1);
 bool play=false;
 
 Menu(Active, play);
@@ -15,7 +15,9 @@ static void Menu(Character Active, bool play){
     Console.WriteLine("c) Store");
     Console.WriteLine("d) Play");
     Console.WriteLine("q) Quit");
-    Active.Stats();
+    if(play==true){
+        Active.Stats();
+    }
     resp=Console.ReadLine().ToLower();
 
     if(resp=="d"&&play==true){
