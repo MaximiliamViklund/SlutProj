@@ -53,6 +53,7 @@ static void Menu(Character Active, bool play){
         Console.Clear();
         Console.WriteLine("Not a valid response");
         Console.ReadLine();
+        Console.Clear();
         Menu(Active, play);
     }
 }
@@ -88,7 +89,15 @@ static void Classes(Character Active, bool play){
     else if(resp=="fighter"){
         Active=Fighter;
     }
+    else{
+        Console.Clear();
+        Console.WriteLine("Not a valid response");
+        Console.ReadLine();
+        Console.Clear();
+        Classes(Active, play);
+    }
     Console.Clear();
+    Console.WriteLine("Your character:");
     Active.Stats();
     Console.ReadLine();
     Console.Clear();
@@ -115,6 +124,6 @@ static void Store(){
 
 }
 
-static void Play(Character Active){
+static void Play(Character Active){ 
 
 }
