@@ -1,13 +1,11 @@
-class Character
-{
+class Character{
     public string namn;
     public int hp;
     public int dmg;
     public int accuracy;
     public int armorClass;
     public int speed;
-    public Character(string namn, int hp, int dmg, int accuracy, int armorClass,int speed)
-    {
+    public Character(string namn, int hp, int dmg, int accuracy, int armorClass,int speed){
         this.namn = namn;
         this.hp = hp;
         this.dmg = dmg;
@@ -17,8 +15,7 @@ class Character
     }
 
 
-    public void Stats()
-    {
+    public void Stats(){
         Console.WriteLine(namn);
         Console.WriteLine(hp>=0?"Hp: "+hp:null);
         Console.WriteLine(armorClass>=0?"Armor Class: "+armorClass:null);
