@@ -5,14 +5,19 @@ using System.Reflection;
 
 Character Active=new(null,-1,-1,-1,-1,-1);
 Character Opponent=new(null,-1,-1,-1,-1,-1);
+int activeBaseHp=0;
+int opponentBaseHp=0;
 bool play=false;
 
-Menu(Active,Opponent,play);
+Menu(Active,Opponent,play,activeBaseHp,opponentBaseHp);
 Console.ReadLine();
 
-static void Menu(Character Active,Character Opponent, bool play){
+static void Text(string text){
+    Console.WriteLine(text);
+}
+static void Menu(Character Active,Character Opponent, bool play, int activeBaseHp, int opponentBaseHp){
     string resp;
-    Console.WriteLine("Welcome to THE FIGHTING GAME");
+    Text("Welcome to THE FIGHTING GAME");
     Console.WriteLine("Choose a class to play");
     Console.WriteLine("a) Choose Class");
     Console.WriteLine("b) Read Rules");
@@ -26,23 +31,23 @@ static void Menu(Character Active,Character Opponent, bool play){
 
     if(resp=="d"&&play==true){
         Console.Clear();
-        Play(Active,Opponent,play);
+        Play(Active,Opponent,play,activeBaseHp,opponentBaseHp);
     }
     else if(resp=="d"&&play==false){
         Console.Clear();
         Console.WriteLine("Choose a class first");
         Console.ReadLine();
         Console.Clear();
-        Menu(Active,Opponent,play);
+        Menu(Active,Opponent,play,activeBaseHp,opponentBaseHp);
     }
     else if(resp=="a"){
         play=true;
         Console.Clear();
-        Classes(Active,Opponent,play);
+        Classes(Active,Opponent,play,activeBaseHp,opponentBaseHp);
     }
     else if(resp=="b"){
         Console.Clear();
-        Rules(Active,Opponent,play);
+        Rules(Active,Opponent,play,activeBaseHp,opponentBaseHp);
     }
     else if(resp=="c"){
         Console.Clear();
@@ -56,12 +61,12 @@ static void Menu(Character Active,Character Opponent, bool play){
         Console.WriteLine("Not a valid response");
         Console.ReadLine();
         Console.Clear();
-        Menu(Active, Opponent, play);
+        Menu(Active, Opponent, play,activeBaseHp,opponentBaseHp);
     }
 }
 
 
-static void Classes(Character Active, Character Opponent, bool play){
+static void Classes(Character Active, Character Opponent, bool play, int activeBaseHp, int opponentBaseHp){
     string resp;    //string to read ReadLines
     int opponent;   //int to randomize Opponents Class
 
@@ -99,13 +104,15 @@ static void Classes(Character Active, Character Opponent, bool play){
 
     if(failSafe==true&&resultat<=ClassList.Count){
         Active=ClassList[resultat];
+        activeBaseHp=Active.hp;
+        opponentBaseHp=Opponent.hp;
     }
     else{
         Console.Clear();
         Console.WriteLine("Not a valid response");
         Console.ReadLine();
         Console.Clear();
-        Classes(Active, Opponent,play);
+        Classes(Active, Opponent,play,activeBaseHp,opponentBaseHp);
     }
     failSafe=false;
     Console.Clear();
@@ -113,10 +120,10 @@ static void Classes(Character Active, Character Opponent, bool play){
     Active.Stats();
     Console.ReadLine();
     Console.Clear();
-    Menu(Active,Opponent,play);
+    Menu(Active,Opponent,play, activeBaseHp,opponentBaseHp);
 }
 
-static void Rules(Character Active, Character Opponent, bool play){
+static void Rules(Character Active, Character Opponent, bool play, int activeBaseHp, int opponentBaseHp){
     Console.WriteLine("First, you choose a character");
     Console.WriteLine("Each character has different modifiers for damage, accuracy and initiative");
     Console.WriteLine("They also have different hp and armor");
@@ -130,14 +137,14 @@ static void Rules(Character Active, Character Opponent, bool play){
     Console.WriteLine("Press ENTER");
     Console.ReadLine();
     Console.Clear();
-    Menu(Active,Opponent,play);
+    Menu(Active,Opponent,play, activeBaseHp,opponentBaseHp);
 }
 
 static void Store(){
 
 }
 
-static void Play(Character Active, Character Opponent, bool play){
+static void Play(Character Active, Character Opponent, bool play, int activeBaseHp, int opponentBaseHp){
     Random generator=new();
     int dice;
 
@@ -184,7 +191,9 @@ static void Play(Character Active, Character Opponent, bool play){
         }
         Console.Clear();
     }
-    Menu(Active,Opponent,play);
+    Active.hp=activeBaseHp;
+    Opponent.hp=opponentBaseHp;
+    Menu(Active,Opponent,play,activeBaseHp,opponentBaseHp);
 
 
     static void ActiveAttack(Character Active, Character Opponent, Random generator, int dice){

@@ -24,3 +24,4 @@ class Character{
         Console.WriteLine(speed>=0?"Initiative modifier: +"+speed:null);
     }
 }
+
