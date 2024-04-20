@@ -1,6 +1,7 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Reflection;
+namespace System;
 
 //-----------------------------Pseudokod---------------------------------//
 //A function for the main menu so that you can always return to it
@@ -15,11 +16,12 @@ using System.Reflection;
 
 //Edit: Maybe use switch instead of if?
 
-
-Character Active=new(null,-1,-1,-1,-1,-1); //Creates the Active Character that will be used to play
-Character Opponent=new(null,-1,-1,-1,-1,-1); //Creates the Opponent Character which will be played against
-int activeBaseHp=0; //Base hp used to return Acives health to the default hp of its class after fight
-int opponentBaseHp=0; //Base hp used to return Opponents health to the default hp of its class after fight
+//Creates two characters that are used as defaults
+Character Active=new(null,-1,-1,-1,-1,-1);
+Character Opponent=new(null,-1,-1,-1,-1,-1);
+//Creates base health ints to store default hp during the game
+int activeBaseHp=0;
+int opponentBaseHp=0;
 bool play=false;
 
 Menu(Active,Opponent,play,activeBaseHp,opponentBaseHp);
@@ -49,31 +51,31 @@ static void Menu(Character Active,Character Opponent, bool play, int activeBaseH
 
 
     //Reads resp and uses different functions depending on input
-    if(resp=="d"&&play==true){
+    if(resp=="d"&&play==true){ //Starts play function if the user has choosen a class
         Console.Clear();
         Play(Active,Opponent,play,activeBaseHp,opponentBaseHp);
     }
-    else if(resp=="d"&&play==false){
+    else if(resp=="d"&&play==false){ //Stops user from starting play function if a class has not been choosen
         Console.Clear();
         Console.WriteLine("Choose a class first");
         Console.ReadLine();
         Console.Clear();
         Menu(Active,Opponent,play,activeBaseHp,opponentBaseHp);
     }
-    else if(resp=="a"){
+    else if(resp=="a"){ //Starts class choosing function
         play=true;
         Console.Clear();
         Classes(Active,Opponent,play,activeBaseHp,opponentBaseHp);
     }
-    else if(resp=="b"){
+    else if(resp=="b"){ //Starts rules function
         Console.Clear();
         Rules(Active,Opponent,play,activeBaseHp,opponentBaseHp);
     }
-    else if(resp=="c"){
+    else if(resp=="c"){ //Starts store function
         Console.Clear();
         Store();
     }
-    else if (resp=="q"){
+    else if (resp=="q"){ //Quits application
         Console.Clear();
     }
     else{
@@ -85,7 +87,7 @@ static void Menu(Character Active,Character Opponent, bool play, int activeBaseH
     }
 }
 
-
+//--------------------------------------------Class Chooser--------------------------------------//
 static void Classes(Character Active, Character Opponent, bool play, int activeBaseHp, int opponentBaseHp){
     string resp;    //string to read ReadLines
     int resultat;
@@ -120,7 +122,7 @@ static void Classes(Character Active, Character Opponent, bool play, int activeB
     resultat--;
 
 
-    if(failSafe==true&&resultat<ClassList.Count&&resultat>-1){ //makes sure that user cant input invalid numbers
+    if(failSafe==true&&resultat<ClassList.Count&&resultat>-1){ //Makes sure that user cant input invalid numbers
         Active=ClassList[resultat];
         activeBaseHp=Active.hp;
     }
