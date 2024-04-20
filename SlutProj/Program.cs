@@ -241,7 +241,7 @@ static void Play(Character Active, Character Opponent, bool play, int activeBase
             Console.ReadLine();
             adder=Modify(Active.dmg,dice,adder,dmgRoll); //Calculates damage roll
             Console.WriteLine("You dealt "+adder+" damage");
-            Opponent.hp-=adder; //subtracts damage roll from health
+            Opponent.hp-=adder;
             if(Opponent.hp<0){Opponent.hp=0;}
             Console.WriteLine("Opponents health is now "+Opponent.hp);
             Console.ReadLine();
@@ -265,7 +265,7 @@ static void Play(Character Active, Character Opponent, bool play, int activeBase
             Console.ReadLine();
             adder=Modify(Opponent.dmg,dice,adder,dmgRoll); //Calculates damage roll
             Console.WriteLine("They deal "+adder+" damage to you");
-            Active.hp-=adder; //subtracts damage roll from health
+            Active.hp-=adder;
             if(Active.hp<0){Active.hp=0;} 
             Console.WriteLine("Your health is now "+Active.hp);
             Console.ReadLine();
