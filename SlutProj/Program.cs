@@ -72,7 +72,7 @@ static void Menu(Character Active,Character Opponent, bool play, int activeBaseH
     }
     else if(resp=="c"){ //Starts store function
         Console.Clear();
-        Store();
+        Store(Active,Opponent,play,activeBaseHp,opponentBaseHp);
     }
     else if (resp=="q"){ //Quits application
         Console.Clear();
@@ -167,7 +167,11 @@ static void Rules(Character Active, Character Opponent, bool play, int activeBas
     Menu(Active,Opponent,play, activeBaseHp,opponentBaseHp);
 }
 
-static void Store(){
+static void Store(Character Active, Character Opponent, bool play, int activeBaseHp, int opponentBaseHp){
+    Console.WriteLine("Work in progress");
+    Console.ReadLine();
+    Console.Clear();
+    Menu(Active,Opponent,play,activeBaseHp,opponentBaseHp);
 
 }
 //-----------------------------------PLAY---------------------------------------------//
