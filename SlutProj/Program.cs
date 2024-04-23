@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.Design;
 using System.Reflection;
-namespace System;
 
 //-----------------------------Pseudokod---------------------------------//
 //A function for the main menu so that you can always return to it
