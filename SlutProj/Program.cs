@@ -10,10 +10,9 @@ using System.Reflection;
 //Play
 //Put all of these as choices in the main menu functions
 //Use the readline function to read the users input in the menu
-//Use an if-statement to use different functions depending on input from readline
+//Use an if-statement with a switch-statement in it to use different functions depending on input from readline
 //Regulate input by using else
 
-//Edit: Maybe use switch instead of if?
 
 //Creates two characters that are used as defaults
 Character Active=new(null,-1,-1,-1,-1,-1);
@@ -49,6 +48,8 @@ static void Menu(Character Active,Character Opponent, bool play, int activeBaseH
     resp=Console.ReadLine().ToLower();
 
 
+
+
     //Reads resp and uses different functions depending on input
     if(resp=="d"&&play==true){ //Starts play function if the user has choosen a class
         Console.Clear();
@@ -61,28 +62,36 @@ static void Menu(Character Active,Character Opponent, bool play, int activeBaseH
         Console.Clear();
         Menu(Active,Opponent,play,activeBaseHp,opponentBaseHp);
     }
-    else if(resp=="a"){ //Starts class choosing function
-        play=true;
-        Console.Clear();
-        Classes(Active,Opponent,play,activeBaseHp,opponentBaseHp);
-    }
-    else if(resp=="b"){ //Starts rules function
-        Console.Clear();
-        Rules(Active,Opponent,play,activeBaseHp,opponentBaseHp);
-    }
-    else if(resp=="c"){ //Starts store function
-        Console.Clear();
-        Store(Active,Opponent,play,activeBaseHp,opponentBaseHp);
-    }
-    else if (resp=="q"){ //Quits application
-        Console.Clear();
-    }
     else{
-        Console.Clear();
-        Console.WriteLine("Not a valid response");
-        Console.ReadLine();
-        Console.Clear();
-        Menu(Active, Opponent, play,activeBaseHp,opponentBaseHp);
+        switch(resp){
+            case "a": //Starts class choosing function
+            play=true;
+            Console.Clear();
+            Classes(Active,Opponent,play,activeBaseHp,opponentBaseHp);
+            break;
+
+            case "b": //Starts rules function
+            Console.Clear();
+            Rules(Active,Opponent,play,activeBaseHp,opponentBaseHp);
+            break;
+
+            case "c":
+            Console.Clear();
+            Store(Active,Opponent,play,activeBaseHp,opponentBaseHp);
+            break;
+
+            case "q":
+            Console.Clear();
+            break;
+
+            default:
+            Console.Clear();
+            Console.WriteLine("Not a valid response");
+            Console.ReadLine();
+            Console.Clear();
+            Menu(Active, Opponent, play,activeBaseHp,opponentBaseHp);
+            break;
+        }
     }
 }
 
@@ -102,9 +111,6 @@ static void Classes(Character Active, Character Opponent, bool play, int activeB
     ClassList.Add(Barbarian);
     Character Fighter=new("Fighter",40,5,3,14,3);
     ClassList.Add(Fighter);
-
-
-
 
 
     Text("Enter number associated with the class you want to play:");
@@ -150,6 +156,8 @@ static void Classes(Character Active, Character Opponent, bool play, int activeB
     Menu(Active,Opponent,play, activeBaseHp,opponentBaseHp);
 }
 
+
+//--------------------------------------------------------RULES--------------------------------------------------------------//
 static void Rules(Character Active, Character Opponent, bool play, int activeBaseHp, int opponentBaseHp){ //Writes out rules for the game/how the game works
     Console.WriteLine("First, you choose a character");
     Console.WriteLine("Each character has different modifiers for damage, accuracy and initiative");
@@ -167,13 +175,19 @@ static void Rules(Character Active, Character Opponent, bool play, int activeBas
     Menu(Active,Opponent,play, activeBaseHp,opponentBaseHp);
 }
 
+
+//--------------------------------------------STORE-----------------------------------------------//
 static void Store(Character Active, Character Opponent, bool play, int activeBaseHp, int opponentBaseHp){
     Console.WriteLine("Work in progress");
     Console.ReadLine();
     Console.Clear();
+
+
     Menu(Active,Opponent,play,activeBaseHp,opponentBaseHp);
 
 }
+
+
 //-----------------------------------PLAY---------------------------------------------//
 static void Play(Character Active, Character Opponent, bool play, int activeBaseHp, int opponentBaseHp){
     Random generator=new();

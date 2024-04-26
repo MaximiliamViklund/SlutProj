@@ -25,3 +25,6 @@ class Character{
     }
 }
 
+class Items{
+    
+}
