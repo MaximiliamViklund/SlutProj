@@ -48,50 +48,48 @@ static void Menu(Character Active,Character Opponent, bool play, int activeBaseH
     resp=Console.ReadLine().ToLower();
 
 
-
-
     //Reads resp and uses different functions depending on input
-    if(resp=="d"&&play==true){ //Starts play function if the user has choosen a class
+    switch(resp){
+        case"a": //Starts class choosing function
+        play=true;
         Console.Clear();
-        Play(Active,Opponent,play,activeBaseHp,opponentBaseHp);
-    }
-    else if(resp=="d"&&play==false){ //Stops user from starting play function if a class has not been choosen
+        Classes(Active,Opponent,play,activeBaseHp,opponentBaseHp);
+        break;
+
+        case "b": //Starts rules function
+        Console.Clear();
+        Rules(Active,Opponent,play,activeBaseHp,opponentBaseHp);
+        break;
+
+        case "c":
+        Console.Clear();
+        Store(Active,Opponent,play,activeBaseHp,opponentBaseHp);
+        break;
+
+        case "q":
+        Console.Clear();
+        break;
+
+        case "d" when play==false: //Stops user from starting play function if a class has not been choosen
         Console.Clear();
         Console.WriteLine("Choose a class first");
         Console.ReadLine();
         Console.Clear();
         Menu(Active,Opponent,play,activeBaseHp,opponentBaseHp);
-    }
-    else{
-        switch(resp){
-            case "a": //Starts class choosing function
-            play=true;
-            Console.Clear();
-            Classes(Active,Opponent,play,activeBaseHp,opponentBaseHp);
-            break;
+        break;
+        
+        case "d" when play==true:
+        Console.Clear();
+        Play(Active,Opponent,play,activeBaseHp,opponentBaseHp);
+        break;
 
-            case "b": //Starts rules function
-            Console.Clear();
-            Rules(Active,Opponent,play,activeBaseHp,opponentBaseHp);
-            break;
-
-            case "c":
-            Console.Clear();
-            Store(Active,Opponent,play,activeBaseHp,opponentBaseHp);
-            break;
-
-            case "q":
-            Console.Clear();
-            break;
-
-            default:
-            Console.Clear();
-            Console.WriteLine("Not a valid response");
-            Console.ReadLine();
-            Console.Clear();
-            Menu(Active, Opponent, play,activeBaseHp,opponentBaseHp);
-            break;
-        }
+        default:
+        Console.Clear();
+        Console.WriteLine("Not a valid response");
+        Console.ReadLine();
+        Console.Clear();
+        Menu(Active, Opponent, play,activeBaseHp,opponentBaseHp);
+        break;
     }
 }
 
