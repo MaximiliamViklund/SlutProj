@@ -6,7 +6,7 @@ using System.Reflection;
 //A function for the main menu so that you can always return to it
 //A function for each part of the game
 //Class choosing menu
-//Store
+//Shop
 //Play
 //Put all of these as choices in the main menu functions
 //Use the readline function to read the users input in the menu
@@ -17,12 +17,13 @@ using System.Reflection;
 //Creates two characters that are used as defaults
 Character Active=new(null,-1,-1,-1,-1,-1);
 Character Opponent=new(null,-1,-1,-1,-1,-1);
-//Creates base health ints to store default hp during the game
+//Creates base health ints to Shop default hp during the game
 int activeBaseHp=0;
 int opponentBaseHp=0;
 bool play=false;
+int gold=0;
 
-Menu(Active,Opponent,play,activeBaseHp,opponentBaseHp);
+Menu(Active,Opponent,play,activeBaseHp,opponentBaseHp,gold);
 Console.ReadLine();
 
 static void Text(string text){ //Function takes string and writes it out in green
@@ -33,19 +34,21 @@ static void Text(string text){ //Function takes string and writes it out in gree
 
 
 //-------------------------------MAIN MENU------------------------------------------------------------------//
-static void Menu(Character Active,Character Opponent, bool play, int activeBaseHp, int opponentBaseHp){
-    string resp;
+static void Menu(Character Active,Character Opponent, bool play, int activeBaseHp, int opponentBaseHp, int gold){
     Text("Welcome to THE FIGHTING GAME");
     Text("Choose a class to play");
     Console.WriteLine("a) Choose Class");
     Console.WriteLine("b) Read Rules");
-    Console.WriteLine("c) Store");
+    Console.WriteLine("c) Shop");
     Console.WriteLine("d) Play");
     Console.WriteLine("q) Quit");
     if(play==true){
+        Console.WriteLine();
         Active.Stats();
     }
-    resp=Console.ReadLine().ToLower();
+    Console.WriteLine();
+    Console.WriteLine("Your gold: "+gold);
+    string resp=Console.ReadLine().ToLower();
 
 
     //Reads resp and uses different functions depending on input
@@ -53,17 +56,17 @@ static void Menu(Character Active,Character Opponent, bool play, int activeBaseH
         case"a": //Starts class choosing function
         play=true;
         Console.Clear();
-        Classes(Active,Opponent,play,activeBaseHp,opponentBaseHp);
+        Classes(Active,Opponent,play,activeBaseHp,opponentBaseHp,gold);
         break;
 
         case "b": //Starts rules function
         Console.Clear();
-        Rules(Active,Opponent,play,activeBaseHp,opponentBaseHp);
+        Rules(Active,Opponent,play,activeBaseHp,opponentBaseHp,gold);
         break;
 
         case "c":
         Console.Clear();
-        Store(Active,Opponent,play,activeBaseHp,opponentBaseHp);
+        Shop(Active,Opponent,play,activeBaseHp,opponentBaseHp,gold);
         break;
 
         case "q":
@@ -75,12 +78,12 @@ static void Menu(Character Active,Character Opponent, bool play, int activeBaseH
         Console.WriteLine("Choose a class first");
         Console.ReadLine();
         Console.Clear();
-        Menu(Active,Opponent,play,activeBaseHp,opponentBaseHp);
+        Menu(Active,Opponent,play,activeBaseHp,opponentBaseHp,gold);
         break;
         
         case "d" when play==true:
         Console.Clear();
-        Play(Active,Opponent,play,activeBaseHp,opponentBaseHp);
+        Play(Active,Opponent,play,activeBaseHp,opponentBaseHp,gold);
         break;
 
         default:
@@ -88,13 +91,13 @@ static void Menu(Character Active,Character Opponent, bool play, int activeBaseH
         Console.WriteLine("Not a valid response");
         Console.ReadLine();
         Console.Clear();
-        Menu(Active, Opponent, play,activeBaseHp,opponentBaseHp);
+        Menu(Active, Opponent, play,activeBaseHp,opponentBaseHp,gold);
         break;
     }
 }
 
 //--------------------------------------------Class Chooser--------------------------------------//
-static void Classes(Character Active, Character Opponent, bool play, int activeBaseHp, int opponentBaseHp){
+static void Classes(Character Active, Character Opponent, bool play, int activeBaseHp, int opponentBaseHp, int gold){
     string resp;    //string to read ReadLines
     int resultat;
 
@@ -134,7 +137,7 @@ static void Classes(Character Active, Character Opponent, bool play, int activeB
         Console.WriteLine("Not a valid response");
         Console.ReadLine();
         Console.Clear();
-        Classes(Active, Opponent,play,activeBaseHp,opponentBaseHp);
+        Classes(Active, Opponent,play,activeBaseHp,opponentBaseHp,gold);
     }
 
     int opponent=resultat;
@@ -151,12 +154,12 @@ static void Classes(Character Active, Character Opponent, bool play, int activeB
     Opponent.Stats();
     Console.ReadLine();
     Console.Clear();
-    Menu(Active,Opponent,play, activeBaseHp,opponentBaseHp);
+    Menu(Active,Opponent,play, activeBaseHp,opponentBaseHp,gold);
 }
 
 
 //--------------------------------------------------------RULES--------------------------------------------------------------//
-static void Rules(Character Active, Character Opponent, bool play, int activeBaseHp, int opponentBaseHp){ //Writes out rules for the game/how the game works
+static void Rules(Character Active, Character Opponent, bool play, int activeBaseHp, int opponentBaseHp, int gold){ //Writes out rules for the game/how the game works
     Console.WriteLine("First, you choose a character");
     Console.WriteLine("Each character has different modifiers for damage, accuracy and initiative");
     Console.WriteLine("They also have different hp and armor");
@@ -170,24 +173,113 @@ static void Rules(Character Active, Character Opponent, bool play, int activeBas
     Text("Press ENTER");
     Console.ReadLine();
     Console.Clear();
-    Menu(Active,Opponent,play, activeBaseHp,opponentBaseHp);
+    Menu(Active,Opponent,play, activeBaseHp,opponentBaseHp,gold);
 }
 
 
-//--------------------------------------------STORE-----------------------------------------------//
-static void Store(Character Active, Character Opponent, bool play, int activeBaseHp, int opponentBaseHp){
-    Console.WriteLine("Work in progress");
-    Console.ReadLine();
-    Console.Clear();
+//--------------------------------------------Shop-----------------------------------------------//
+static void Shop(Character Active, Character Opponent, bool play, int activeBaseHp, int opponentBaseHp, int gold){
 
+    Console.WriteLine("Welcome to the Shop!!");
+    Console.WriteLine("Anything you buy will be reset if you change your class.");
+    Console.WriteLine("What would you like?");
+    Console.WriteLine("Your gold: "+gold);
+    Console.WriteLine();
+    Text("a");
+    Console.WriteLine("Chainmail Armour");
+    Console.WriteLine("+1 to your Armor Class");
+    Console.WriteLine("Costs 10 gold");
+    Console.WriteLine();
+    Text("b");
+    Console.WriteLine("Silver Sword");
+    Console.WriteLine("+1 to damage");
+    Console.WriteLine("Costs 15 gold");
+    Console.WriteLine();
+    Text("c");
+    Console.WriteLine("Eyes of Steel");
+    Console.WriteLine("+1 to your accuracy");
+    Console.WriteLine("Costs 10 gold");
+    Console.WriteLine();
+    Text("d");
+    Console.WriteLine("Sword of Tyr");
+    Console.WriteLine("+3 to damage");
+    Console.WriteLine("Costs 30 gold");
+    Console.WriteLine();
+    string resp=Console.ReadLine().ToLower();
 
-    Menu(Active,Opponent,play,activeBaseHp,opponentBaseHp);
+    switch(resp){
+        case "a" when gold>=10:
+        Console.WriteLine("You bought Chainmail Armour");
+        Active.armorClass+=1;
+        gold-=10;
+        Console.ReadLine();
+        Console.Clear();
+        Menu(Active,Opponent,play,activeBaseHp,opponentBaseHp,gold);
+        break;
+        case "a" when gold<10:
+        Console.WriteLine("You don't have enough gold for that");
+        Console.ReadLine();
+        Console.Clear();
+        Shop(Active,Opponent,play,activeBaseHp,opponentBaseHp,gold);
+        break;
 
+        case "b" when gold>=15:
+        Console.WriteLine("You bought a Silver Sword");
+        Active.dmg+=1;
+        gold-=15;
+        Console.ReadLine();
+        Console.Clear();
+        Menu(Active,Opponent,play,activeBaseHp,opponentBaseHp,gold);
+        break;
+        case "b" when gold<15:
+        Console.WriteLine("You don't have enough gold for that");
+        Console.ReadLine();
+        Console.Clear();
+        Shop(Active,Opponent,play,activeBaseHp,opponentBaseHp,gold);
+        break;
+
+        case "c" when gold>=10:
+        Console.WriteLine("You bought Eyes of Steel");
+        Active.accuracy+=1;
+        gold-=10;
+        Console.ReadLine();
+        Console.Clear();
+        Menu(Active,Opponent,play,activeBaseHp,opponentBaseHp,gold);
+        break;
+        case "c" when gold<10:
+        Console.WriteLine("You don't have enough gold for that");
+        Console.ReadLine();
+        Console.Clear();
+        Shop(Active,Opponent,play,activeBaseHp,opponentBaseHp,gold);
+        break;
+
+        case "d" when gold>=30:
+        Console.WriteLine("You bought The Sword of Tyr");
+        Active.dmg+=3;
+        gold-=30;
+        Console.ReadLine();
+        Console.Clear();
+        Menu(Active,Opponent,play,activeBaseHp,opponentBaseHp,gold);
+        break;
+        case "d" when gold<30:
+        Console.WriteLine("You don't have enough gold for that");
+        Console.ReadLine();
+        Console.Clear();
+        Shop(Active,Opponent,play,activeBaseHp,opponentBaseHp,gold);
+        break;
+
+        default:
+        Console.WriteLine("Not a valid response.");
+        Console.ReadLine();
+        Console.Clear();
+        Shop(Active,Opponent,play,activeBaseHp,opponentBaseHp,gold);
+        break;
+    }
 }
 
 
 //-----------------------------------PLAY---------------------------------------------//
-static void Play(Character Active, Character Opponent, bool play, int activeBaseHp, int opponentBaseHp){
+static void Play(Character Active, Character Opponent, bool play, int activeBaseHp, int opponentBaseHp, int gold){
     Random generator=new();
     int dice;
     bool iniative=false;
@@ -228,7 +320,7 @@ static void Play(Character Active, Character Opponent, bool play, int activeBase
             ActiveAttack(Active,Opponent,generator,dice);
         }
 
-        if(Opponent.hp==0){Console.WriteLine("Congrats, you won!");}
+        if(Opponent.hp==0){Console.WriteLine("Congrats, you won!");gold+=20;}
         else if(Active.hp==0){
             Console.WriteLine("You lost, better luck next time");
         Console.ReadLine();
@@ -237,7 +329,7 @@ static void Play(Character Active, Character Opponent, bool play, int activeBase
     }
     Active.hp=activeBaseHp;
     Opponent.hp=opponentBaseHp;
-    Menu(Active,Opponent,play,activeBaseHp,opponentBaseHp);
+    Menu(Active,Opponent,play,activeBaseHp,opponentBaseHp,gold);
 
 
     static void ActiveAttack(Character Active, Character Opponent, Random generator, int dice){ //Function for users attacks
