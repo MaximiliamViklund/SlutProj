@@ -1,7 +1,4 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.Design;
-using System.Reflection;
-
+﻿
 //-----------------------------Pseudokod---------------------------------//
 //A function for the main menu so that you can always return to it
 //A function for each part of the game
@@ -69,10 +66,6 @@ static void Menu(Character Active,Character Opponent, bool play, int activeBaseH
         Shop(Active,Opponent,play,activeBaseHp,opponentBaseHp,gold);
         break;
 
-        case "q":
-        Console.Clear();
-        break;
-
         case "d" when play==false: //Stops user from starting play function if a class has not been choosen
         Console.Clear();
         Console.WriteLine("Choose a class first");
@@ -84,6 +77,10 @@ static void Menu(Character Active,Character Opponent, bool play, int activeBaseH
         case "d" when play==true:
         Console.Clear();
         Play(Active,Opponent,play,activeBaseHp,opponentBaseHp,gold);
+        break;
+
+        case "q":
+        Console.Clear();
         break;
 
         default:
@@ -99,7 +96,6 @@ static void Menu(Character Active,Character Opponent, bool play, int activeBaseH
 //--------------------------------------------Class Chooser--------------------------------------//
 static void Classes(Character Active, Character Opponent, bool play, int activeBaseHp, int opponentBaseHp, int gold){
     string resp;    //string to read ReadLines
-    int resultat;
 
     //Creating classes and adding them to CharacterList
     //Choose to make a list because it enables me to easily add more charcter classes
@@ -124,7 +120,7 @@ static void Classes(Character Active, Character Opponent, bool play, int activeB
         ClassList[i].Stats();
     }
     resp=Console.ReadLine().ToLower();
-    bool failSafe = int.TryParse(resp, out resultat);
+    bool failSafe = int.TryParse(resp, out int resultat);
     resultat--;
 
 
@@ -150,8 +146,6 @@ static void Classes(Character Active, Character Opponent, bool play, int activeB
     Console.Clear();
     Console.WriteLine("Your character:");
     Active.Stats();
-    Console.WriteLine();
-    Opponent.Stats();
     Console.ReadLine();
     Console.Clear();
     Menu(Active,Opponent,play, activeBaseHp,opponentBaseHp,gold);
@@ -184,6 +178,7 @@ static void Shop(Character Active, Character Opponent, bool play, int activeBase
     Console.WriteLine("Anything you buy will be reset if you change your class.");
     Console.WriteLine("What would you like?");
     Console.WriteLine("Your gold: "+gold);
+    Console.WriteLine("q) Menu");
     Console.WriteLine();
     Text("a");
     Console.WriteLine("Chainmail Armour");
@@ -207,7 +202,7 @@ static void Shop(Character Active, Character Opponent, bool play, int activeBase
     Console.WriteLine();
     string resp=Console.ReadLine().ToLower();
 
-    switch(resp){
+    switch(resp){ //Takes input and amount of gold and changes stats depending on these
         case "a" when gold>=10:
         Console.WriteLine("You bought Chainmail Armour");
         Active.armorClass+=1;
@@ -268,6 +263,23 @@ static void Shop(Character Active, Character Opponent, bool play, int activeBase
         Shop(Active,Opponent,play,activeBaseHp,opponentBaseHp,gold);
         break;
 
+        case "g" when gold>=200: //Little easteregg hehe
+        Console.WriteLine("You are now GOD");
+        Active.dmg+=100;
+        Active.accuracy+=30;
+        Active.armorClass+=25;
+        Active.speed+=20;
+        Active.hp+=200;
+        Console.ReadLine();
+        Console.Clear();
+        Menu(Active,Opponent,play,activeBaseHp,opponentBaseHp,gold);
+        break;
+
+        case "q":
+        Console.Clear();
+        Menu(Active,Opponent,play,activeBaseHp,opponentBaseHp,gold);
+        break;
+
         default:
         Console.WriteLine("Not a valid response.");
         Console.ReadLine();
@@ -313,11 +325,15 @@ static void Play(Character Active, Character Opponent, bool play, int activeBase
         Console.WriteLine();
         if(iniative==true&&Active.hp!=0){ //Makes sure that whoever has higher iniative plays first
             ActiveAttack(Active,Opponent,generator,dice);
-            OpponentAttack(Active,Opponent,generator,dice);
+            if(Opponent.hp!=0){
+                OpponentAttack(Active,Opponent,generator,dice);
+            }
         }
         else if(iniative==false&&Opponent.hp!=0){
             OpponentAttack(Active,Opponent,generator,dice);
-            ActiveAttack(Active,Opponent,generator,dice);
+            if(Active.hp!=0){
+                ActiveAttack(Active,Opponent,generator,dice);
+            }
         }
 
         if(Opponent.hp==0){Console.WriteLine("Congrats, you won!");gold+=20;}
